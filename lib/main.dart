@@ -1,3 +1,5 @@
+import 'dart:html' as prefix0;
+
 import 'package:flutter_web/material.dart';
 
 void main() => runApp(MyApp());
@@ -16,10 +18,18 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+
+  String title = "Dindr";
+  String toFilterOn = "";
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +42,7 @@ class MyHomePage extends StatelessWidget {
           builder: (BuildContext context) {
             return IconButton(
               icon: const Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
+              onPressed: _airDress,
               tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
             );
           },
@@ -79,57 +87,118 @@ class MyHomePage extends StatelessWidget {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[createElement()],
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: 250,
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Form(
+                    onChanged: (){
+                      setState(() {
+                        toFilterOn = toFilterOn;
+                      });
+                    },
+                    child: TextFormField(
+                      cursorColor: Colors.red,
+                      decoration:
+                          InputDecoration(hintText: 'Search for skill...'),
+                      autovalidate: true,
+                      validator: (event){
+                        toFilterOn = event;
+                      },
+                    ),
+                  ),
+                ),
+                returnElement()
+              ],
             ),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-}
 
-Widget createElement() {
-  List<String> names = ["mike", "john", "robert"];
-  List<String> skills = ["c++", "python", "manager"];
-  List<Widget> widgets = new List<Widget>();
-  for (var i = 0; i < names.length; i++) {
-    widgets.add(new Container(
-        margin: const EdgeInsets.all(4),
-        padding: const EdgeInsets.all(4),
-        decoration:
-            new BoxDecoration(border: new Border.all(color: Colors.tealAccent)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  void _airDress() {
+    print("Air dress");
+  }
+
+  void _restitchDress() {
+    print("Restitch Dress");
+  }
+
+  void _repairDress() {
+    print("Repair dress");
+  }
+
+  void bindValue(String val) {
+    print("enter");
+  }
+
+  Widget returnElement() {
+    var names = [
+      "mike",
+      "john",
+      "robert",
+      "william",
+      "kyle",
+      "stevenski",
+      "lyal",
+      "johnny"
+    ];
+    var skills = [
+      "c++",
+      "python",
+      "manager",
+      "woodcutter",
+      "farmer",
+      "farmer",
+      "mechanical engineer",
+      "c++"
+    ];
+    List<Widget> widgets = new List<Widget>();
+    if(skills.contains(toFilterOn) || toFilterOn.isEmpty) {
+      for (var i = 0; i < names.length; i++) {
+        if(skills[i] != toFilterOn && toFilterOn.isNotEmpty) {
+          skills[i] = null;
+          names[i] = null;
+          continue;
+         }
+        widgets.add(new Container(
+            margin: const EdgeInsets.all(4),
+            padding: const EdgeInsets.all(4),
+            decoration: new BoxDecoration(
+                border: new Border.all(color: Colors.tealAccent)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(
-                      bottom: 0, top: 0, right: 2, left: 2),
-                  child: Column(children: <Widget>[
-                    Image.asset("jobs.jpg", width: 50, fit: BoxFit.cover)
-                  ]),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      bottom: 0, top: 0, right: 2, left: 2),
-                  child: Column(
-                      children: <Widget>[Text(names[i]), Text(skills[i])]),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 0, top: 0, right: 2, left: 2),
+                      child: Column(children: <Widget>[
+                        Image.asset("jobs.jpg", width: 50, fit: BoxFit.cover)
+                      ]),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 0, top: 0, right: 2, left: 2),
+                      child: Column(
+                        children: <Widget>[
+                          Text(names[i]),
+                          Text(skills[i])
+                        ]
+                      ),
+                    ),
+                  ],
                 ),
               ],
-            ),
-          ],
-        )));
+            )));
+      }
+    }
+    return new Column(
+        mainAxisAlignment: MainAxisAlignment.center, children: widgets);
   }
-  return new Column(
-      mainAxisAlignment: MainAxisAlignment.center, children: widgets);
 }
-
-void _airDress() {}
-
-void _restitchDress() {}
-
-void _repairDress() {}
