@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Dindr'),
     );
   }
 }
@@ -50,12 +50,43 @@ class MyHomePage extends StatelessWidget {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'Hello, World!',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                createElement()
+              ],
             ),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+Widget createElement() {
+  List<String> names = ["mike", "john", "robert"];
+  List<String> skills = ["c++", "python", "manager"];
+  List<Widget> widgets = new List<Widget>();
+  for (var i = 0; i < names.length; i++) {
+    widgets.add(new Container(
+        margin: const EdgeInsets.all(4),
+        padding: const EdgeInsets.all(4),
+        decoration:
+            new BoxDecoration(border: new Border.all(color: Colors.tealAccent)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Row(children: <Widget>[
+                Column(children: <Widget>[
+                  Image.asset("jobs.jpeg", width: 50, fit: BoxFit.cover)
+                ]),
+                Column(children: <Widget>[Text(names[i]), Text(skills[i])]),
+              ],
+            ),
+          ],
+        )));
+  }
+  return new Column(
+      mainAxisAlignment: MainAxisAlignment.center, children: widgets
+  );
 }
