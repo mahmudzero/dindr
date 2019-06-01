@@ -28,8 +28,37 @@ class MyHomePage extends StatelessWidget {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          },
+        ),
         title: Text(title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.playlist_play),
+            tooltip: 'Air it',
+            onPressed: _airDress,
+          ),
+          IconButton(
+            icon: Icon(Icons.playlist_add),
+            tooltip: 'Restitch it',
+            onPressed: _restitchDress,
+          ),
+          IconButton(
+            icon: Icon(Icons.playlist_add_check),
+            tooltip: 'Repair it',
+            onPressed: _repairDress,
+          ),
+        ],
       ),
+
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -52,9 +81,7 @@ class MyHomePage extends StatelessWidget {
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                createElement()
-              ],
+              children: <Widget>[createElement()],
             ),
           ],
         ),
@@ -76,17 +103,33 @@ Widget createElement() {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Row(children: <Widget>[
-                Column(children: <Widget>[
-                  Image.asset("jobs.jpeg", width: 50, fit: BoxFit.cover)
-                ]),
-                Column(children: <Widget>[Text(names[i]), Text(skills[i])]),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(
+                      bottom: 0, top: 0, right: 2, left: 2),
+                  child: Column(children: <Widget>[
+                    Image.asset("jobs.jpg", width: 50, fit: BoxFit.cover)
+                  ]),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      bottom: 0, top: 0, right: 2, left: 2),
+                  child: Column(
+                      children: <Widget>[Text(names[i]), Text(skills[i])]),
+                ),
               ],
             ),
           ],
         )));
   }
   return new Column(
-      mainAxisAlignment: MainAxisAlignment.center, children: widgets
-  );
+      mainAxisAlignment: MainAxisAlignment.center, children: widgets);
 }
+
+void _airDress() {}
+
+void _restitchDress() {}
+
+void _repairDress() {}
