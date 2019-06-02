@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:html' as prefix0;
 
 import 'package:flutter_web/material.dart';
@@ -99,9 +100,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: 250,
                   padding: const EdgeInsets.only(bottom: 5),
                   child: Form(
-                    onChanged: (){
-                      setState(() {
-                        toFilterOn = toFilterOn;
+                    onChanged: () async {
+                      Completer c = new Completer();
+                      new Timer(new Duration(seconds: 0), () {
+                        c.complete();
+                        setState(() {
+                          print("setting state...");
+                        });
                       });
                     },
                     child: TextFormField(
@@ -122,6 +127,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void didToFilterOnChange() {
+    String intermediateToFilterOn = toFilterOn;
+    while(intermediateToFilterOn == toFilterOn) {};
+    return;
   }
 
   void _airDress() {
@@ -202,6 +213,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             )));
       }
+    } else {
+      print("returning image");
+      return new Image(image: new AssetImage("loading.gif"));
     }
     return new Column(
         mainAxisAlignment: MainAxisAlignment.center, children: widgets);
